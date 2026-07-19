@@ -78,7 +78,7 @@ export default function App() {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch(`/api/weather?q=${encodeURIComponent(query)}`);
+      const res = await fetch(`/api/weather?q=${encodeURIComponent(query)}&_t=${Date.now()}`);
       const data = await res.json();
       
       if (!res.ok) {
@@ -535,8 +535,8 @@ export default function App() {
                 </div>
 
                 {/* Main Temperature & Big Icon */}
-                <div className="flex flex-col md:flex-row justify-between items-center py-6 gap-8">
-                  <div className="flex flex-col md:flex-row items-center gap-6">
+                <div className="flex flex-col md:flex-row flex-wrap justify-between items-center py-6 gap-6">
+                  <div className="flex flex-col sm:flex-row items-center gap-6 shrink-0">
                     <div className="flex items-start">
                       <span className="text-[120px] md:text-[150px] font-extrabold leading-none tracking-tighter drop-shadow-2xl text-white">
                         {Math.round(weatherData.current.temp_c)}
@@ -544,7 +544,7 @@ export default function App() {
                       <span className="text-5xl md:text-6xl font-light mt-4 md:mt-6 text-blue-400">°C</span>
                     </div>
 
-                    <div className="flex items-center gap-4 border-t md:border-t-0 md:border-l border-white/10 pt-4 md:pt-0 md:pl-6">
+                    <div className="flex items-center gap-4 border-t sm:border-t-0 sm:border-l border-white/10 pt-4 sm:pt-0 sm:pl-6">
                       <img
                         src={weatherData.current.condition.icon.startsWith("http") ? weatherData.current.condition.icon : `https:${weatherData.current.condition.icon}`}
                         alt={weatherData.current.condition.text}
@@ -561,7 +561,7 @@ export default function App() {
                   </div>
 
                   {/* High / Low details */}
-                  <div className="grid grid-cols-2 gap-x-6 gap-y-3 bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-4 self-stretch md:self-center justify-center">
+                  <div className="grid grid-cols-2 gap-x-6 gap-y-3 bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-4 self-stretch md:self-center justify-center shrink-0">
                     <div>
                       <span className="text-[10px] text-white/40 block font-bold uppercase tracking-wider">오늘 최고</span>
                       <span className="text-lg font-bold font-display text-rose-400">{weatherData.forecast.forecastday[0]?.day.maxtemp_c}°C</span>

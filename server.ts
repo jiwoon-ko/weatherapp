@@ -20,6 +20,11 @@ async function startServer() {
 
   // API Route: Weather Proxy
   app.get("/api/weather", async (req, res) => {
+    // Set no-cache headers to prevent browser caching of stale mock responses
+    res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate");
+    res.setHeader("Pragma", "no-cache");
+    res.setHeader("Expires", "0");
+
     const rawQuery = String(req.query.q || "Seoul");
     const apiKey = process.env.WEATHER_API_KEY;
 

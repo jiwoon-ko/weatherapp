@@ -26,10 +26,10 @@ async function startServer() {
     res.setHeader("Expires", "0");
 
     const rawQuery = String(req.query.q || "Seoul");
-    const apiKey = process.env.WEATHER_API_KEY;
+    const apiKey = process.env.WEATHER_API_KEY?.trim();
 
     // Helper: generate mock data if no API Key is provided or if requested
-    const isKeyMissing = !apiKey || apiKey === "YOUR_WEATHERAPI_KEY" || apiKey.includes("MY_");
+    const isKeyMissing = !apiKey || apiKey === "" || apiKey === "undefined" || apiKey === "null" || apiKey === "YOUR_WEATHERAPI_KEY" || apiKey.includes("MY_");
 
     if (isKeyMissing) {
       console.log(`[WeatherAPI Proxy] API key is missing or placeholder. Serving mock data for: ${rawQuery}`);

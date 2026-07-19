@@ -33,6 +33,15 @@ export default function App() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<WeatherError | null>(null);
   const [locating, setLocating] = useState(false);
+  const [showDemoWarning, setShowDemoWarning] = useState(() => {
+    const saved = localStorage.getItem("dismissed_demo_warning");
+    return saved !== "true";
+  });
+
+  const dismissDemoWarning = () => {
+    setShowDemoWarning(false);
+    localStorage.setItem("dismissed_demo_warning", "true");
+  };
 
   // Load favorites from local storage or set defaults
   const [favorites, setFavorites] = useState<string[]>(() => {
@@ -428,7 +437,7 @@ export default function App() {
         </section>
 
         {/* Demo Mode Guide Badge */}
-        {weatherData?.isMock && (
+        {weatherData?.isMock && showDemoWarning && (
           <div id="demo-mode-warning" className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 bg-amber-950/30 border border-amber-800/30 rounded-2xl animate-fade-in text-xs text-amber-200">
             <div className="flex items-start sm:items-center gap-2.5">
               <AlertTriangle className="h-5 w-5 text-amber-400 shrink-0 mt-0.5 sm:mt-0" />
@@ -437,14 +446,23 @@ export default function App() {
                 <p className="text-slate-400 mt-0.5">실시간 날씨를 조회하려면 우측 상단의 AI Studio **설정(Secrets)** 패널에서 **WEATHER_API_KEY**를 추가해 주세요.</p>
               </div>
             </div>
-            <a
-              href="https://www.weatherapi.com/"
-              target="_blank"
-              rel="noreferrer"
-              className="px-3 py-1.5 bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 font-semibold rounded-lg border border-amber-500/20 transition-all text-center self-start sm:self-center shrink-0"
-            >
-              WeatherAPI 무료 키 발급받기
-            </a>
+            <div className="flex items-center gap-2 self-start sm:self-center shrink-0">
+              <a
+                href="https://www.weatherapi.com/"
+                target="_blank"
+                rel="noreferrer"
+                className="px-3 py-1.5 bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 font-semibold rounded-lg border border-amber-500/20 transition-all text-center"
+              >
+                무료 키 발급받기
+              </a>
+              <button
+                onClick={dismissDemoWarning}
+                className="p-1.5 hover:bg-white/10 rounded-lg text-white/40 hover:text-white transition-all cursor-pointer flex items-center justify-center"
+                title="닫기"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </div>
           </div>
         )}
 
@@ -554,7 +572,7 @@ export default function App() {
                       <div className="flex flex-col">
                         <span className="text-2xl font-bold text-white tracking-tight whitespace-nowrap">{weatherData.current.condition.text}</span>
                         <span className="text-white/50 text-xs mt-1">
-                          체감 {weatherData.current.feelslike_c}°C • 자외선 {weatherData.current.uv}
+                          체감 {Math.round(weatherData.current.feelslike_c * 10) / 10}°C • 자외선 {weatherData.current.uv}
                         </span>
                       </div>
                     </div>
@@ -564,11 +582,19 @@ export default function App() {
                   <div className="grid grid-cols-2 gap-x-6 gap-y-3 bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-4 self-stretch md:self-center justify-center shrink-0">
                     <div>
                       <span className="text-[10px] text-white/40 block font-bold uppercase tracking-wider">오늘 최고</span>
-                      <span className="text-lg font-bold font-display text-rose-400">{weatherData.forecast.forecastday[0]?.day.maxtemp_c}°C</span>
+                      <span className="text-lg font-bold font-display text-rose-400">
+                        {weatherData.forecast.forecastday[0]
+                          ? `${Math.round(weatherData.forecast.forecastday[0].day.maxtemp_c * 10) / 10}`
+                          : "0"}°C
+                      </span>
                     </div>
                     <div>
                       <span className="text-[10px] text-white/40 block font-bold uppercase tracking-wider">오늘 최저</span>
-                      <span className="text-lg font-bold font-display text-sky-400">{weatherData.forecast.forecastday[0]?.day.mintemp_c}°C</span>
+                      <span className="text-lg font-bold font-display text-sky-400">
+                        {weatherData.forecast.forecastday[0]
+                          ? `${Math.round(weatherData.forecast.forecastday[0].day.mintemp_c * 10) / 10}`
+                          : "0"}°C
+                      </span>
                     </div>
                   </div>
                 </div>

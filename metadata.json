@@ -1,0 +1,6 @@
+{
+  "name": "오늘의 날씨 (Weather App)",
+  "description": "WeatherAPI를 활용하여 오늘의 실시간 날씨와 예보를 알려주는 세련된 웹앱입니다.",
+  "requestFramePermissions": ["geolocation"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

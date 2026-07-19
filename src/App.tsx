@@ -552,7 +552,7 @@ export default function App() {
                         className="w-16 h-16 md:w-20 md:h-20 object-contain filter drop-shadow-[0_0_20px_rgba(59,130,246,0.4)]"
                       />
                       <div className="flex flex-col">
-                        <span className="text-2xl font-bold text-white tracking-tight">{weatherData.current.condition.text}</span>
+                        <span className="text-2xl font-bold text-white tracking-tight whitespace-nowrap">{weatherData.current.condition.text}</span>
                         <span className="text-white/50 text-xs mt-1">
                           체감 {weatherData.current.feelslike_c}°C • 자외선 {weatherData.current.uv}
                         </span>
@@ -795,7 +795,7 @@ export default function App() {
                             className="w-10 h-10 object-contain drop-shadow"
                           />
                           <div className="hidden sm:flex flex-col">
-                            <span className="text-xs text-white/80 font-medium">{f.day.condition.text}</span>
+                            <span className="text-xs text-white/80 font-medium whitespace-nowrap">{f.day.condition.text}</span>
                             {f.day.daily_chance_of_rain > 0 && (
                               <span className="text-[9px] text-blue-400 font-medium">강수 {f.day.daily_chance_of_rain}%</span>
                             )}

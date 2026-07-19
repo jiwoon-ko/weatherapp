@@ -49,7 +49,8 @@ async function startServer() {
       // If the primary query fails with 400, try a standard fallback (e.g. "Seoul" or "Jeju, South Korea")
       if (!response.ok && response.status === 400) {
         console.log(`[WeatherAPI Fallback] Query "${apiQuery}" failed with 400. Trying fallback query...`);
-        const fallbackQuery = rawQuery.toLowerCase().includes("jeju") || rawQuery.toLowerCase().includes("제주") || rawQuery.toLowerCase().includes("노형") || rawQuery.toLowerCase().includes("용담") ? "Jeju, South Korea" : "Seoul";
+        const isJejuFallback = ["제주", "jeju", "노형", "아라", "용담", "연동", "외도", "화북", "삼양", "이도", "일도", "삼도", "도남", "애월", "한림", "조천", "구좌", "대정", "남원", "성산", "서귀포"].some(k => rawQuery.toLowerCase().includes(k));
+        const fallbackQuery = isJejuFallback ? "Jeju, South Korea" : "Seoul";
         const fallbackUrl = `http://api.weatherapi.com/v1/forecast.json?key=${encodeURIComponent(apiKey)}&q=${encodeURIComponent(fallbackQuery)}&days=3&aqi=yes&alerts=no&lang=ko`;
         
         response = await fetch(fallbackUrl);

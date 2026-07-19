@@ -1,129 +1,129 @@
 // Shared Weather Logic (Reusable for Express server & Vercel serverless functions)
 
-// High-quality mock weather database in Korean
+// High-quality mock weather database in Korean (calibrated for July summer season)
 export function getMockWeatherData(query: string) {
   const normalized = query.toLowerCase().trim();
   let cityName = "서울";
   let country = "대한민국";
   let region = "서울";
-  let tempC = 24.5;
+  let tempC = 29.5;
   let conditionText = "맑음";
   let conditionIcon = "//cdn.weatherapi.com/weather/64x64/day/113.png";
   let conditionCode = 1000;
   const isDay = 1;
   const windKph = 8.5;
   const windDir = "ENE";
-  let humidity = 60;
-  let feelslikeC = 25.2;
-  const uv = 5.0;
-  let pm10 = 28;
-  let pm2_5 = 12;
+  let humidity = 68;
+  let feelslikeC = 31.2;
+  const uv = 7.0;
+  let pm10 = 24;
+  let pm2_5 = 11;
 
   if (normalized.includes("노형동") || normalized.includes("노형")) {
     cityName = "제주시 노형동";
     region = "제주특별자치도";
-    tempC = 21.5;
+    tempC = 31.2;
     conditionText = "맑음";
     conditionIcon = "//cdn.weatherapi.com/weather/64x64/day/113.png";
-    humidity = 62;
-    feelslikeC = 22.1;
+    humidity = 64;
+    feelslikeC = 33.5;
     pm10 = 15;
     pm2_5 = 7;
   } else if (normalized.includes("용담동") || normalized.includes("용담")) {
     cityName = "제주시 용담동";
     region = "제주특별자치도";
-    tempC = 22.3;
+    tempC = 30.5;
     conditionText = "구름 조금";
     conditionIcon = "//cdn.weatherapi.com/weather/64x64/day/116.png";
-    humidity = 68;
-    feelslikeC = 23.0;
+    humidity = 70;
+    feelslikeC = 32.8;
     pm10 = 19;
     pm2_5 = 9;
   } else if (normalized.includes("연동")) {
     cityName = "제주시 연동";
     region = "제주특별자치도";
-    tempC = 21.8;
+    tempC = 31.0;
     conditionText = "맑음";
     conditionIcon = "//cdn.weatherapi.com/weather/64x64/day/113.png";
-    humidity = 64;
-    feelslikeC = 22.2;
+    humidity = 65;
+    feelslikeC = 33.2;
     pm10 = 17;
     pm2_5 = 8;
   } else if (normalized.includes("아라동") || normalized.includes("아라")) {
     cityName = "제주시 아라동";
     region = "제주특별자치도";
-    tempC = 20.2; // Ara-dong is higher altitude and cooler
-    conditionText = "안개 흐림";
-    conditionIcon = "//cdn.weatherapi.com/weather/64x64/day/143.png";
-    humidity = 88;
-    feelslikeC = 20.2;
+    tempC = 28.5; // Ara-dong is higher altitude and cooler
+    conditionText = "구름 조금";
+    conditionIcon = "//cdn.weatherapi.com/weather/64x64/day/116.png";
+    humidity = 78;
+    feelslikeC = 30.2;
     pm10 = 12;
     pm2_5 = 6;
-  } else if (normalized.includes("jeju") || normalized.includes("제주")) {
-    cityName = "제주시";
+  } else if (normalized.includes("jeju") || normalized.includes("제주") || normalized.includes("서귀포")) {
+    cityName = normalized.includes("서귀포") ? "서귀포시" : "제주시";
     region = "제주특별자치도";
-    tempC = 22.0;
-    conditionText = "흐림";
-    conditionIcon = "//cdn.weatherapi.com/weather/64x64/day/122.png";
-    conditionCode = 1009;
-    humidity = 85;
-    feelslikeC = 22.0;
+    tempC = 30.2;
+    conditionText = "구름 조금";
+    conditionIcon = "//cdn.weatherapi.com/weather/64x64/day/116.png";
+    conditionCode = 1003;
+    humidity = 72;
+    feelslikeC = 32.5;
     pm10 = 18;
     pm2_5 = 8;
   } else if (normalized.endsWith("동") || normalized.endsWith("읍") || normalized.endsWith("면") || normalized.endsWith("시") || normalized.endsWith("군")) {
     cityName = query;
     region = "대한민국 지역";
-    tempC = 23.5;
+    tempC = 29.8;
     conditionText = "맑음";
     conditionIcon = "//cdn.weatherapi.com/weather/64x64/day/113.png";
-    humidity = 58;
-    feelslikeC = 24.1;
+    humidity = 66;
+    feelslikeC = 31.5;
     pm10 = 25;
     pm2_5 = 11;
   } else if (normalized.includes("busan") || normalized.includes("부산")) {
     cityName = "부산";
     region = "부산광역시";
-    tempC = 23.8;
+    tempC = 30.0;
     conditionText = "구름 조금";
     conditionIcon = "//cdn.weatherapi.com/weather/64x64/day/116.png";
     conditionCode = 1003;
     humidity = 72;
-    feelslikeC = 24.8;
+    feelslikeC = 32.0;
     pm10 = 35;
     pm2_5 = 15;
   } else if (normalized.includes("tokyo") || normalized.includes("도쿄")) {
     cityName = "도쿄";
     country = "일본";
     region = "도쿄";
-    tempC = 28.1;
-    conditionText = "가끔 비";
-    conditionIcon = "//cdn.weatherapi.com/weather/64x64/day/176.png";
-    conditionCode = 1063;
-    humidity = 68;
-    feelslikeC = 30.5;
+    tempC = 31.1;
+    conditionText = "맑음";
+    conditionIcon = "//cdn.weatherapi.com/weather/64x64/day/113.png";
+    conditionCode = 1000;
+    humidity = 62;
+    feelslikeC = 33.5;
     pm10 = 15;
     pm2_5 = 5;
   } else if (normalized.includes("london") || normalized.includes("런던")) {
     cityName = "런던";
     country = "영국";
     region = "런던";
-    tempC = 16.0;
-    conditionText = "가벼운 소나기";
-    conditionIcon = "//cdn.weatherapi.com/weather/64x64/day/296.png";
-    conditionCode = 1183;
-    humidity = 80;
-    feelslikeC = 15.2;
+    tempC = 22.0;
+    conditionText = "구름 조금";
+    conditionIcon = "//cdn.weatherapi.com/weather/64x64/day/116.png";
+    conditionCode = 1003;
+    humidity = 58;
+    feelslikeC = 22.2;
     pm10 = 10;
     pm2_5 = 4;
   } else {
     // Fallback for general search
     cityName = query.charAt(0).toUpperCase() + query.slice(1);
     country = "지정 지역";
-    tempC = 20.0;
+    tempC = 29.0;
     conditionText = "구름 조금";
     conditionIcon = "//cdn.weatherapi.com/weather/64x64/day/116.png";
-    humidity = 65;
-    feelslikeC = 20.5;
+    humidity = 67;
+    feelslikeC = 30.6;
   }
 
   // Generate mock hours for today (every 3 hours starting from 00:00)
@@ -280,7 +280,10 @@ export function mapKoreanQueryToEnglish(query: string): { apiQuery: string; disp
   // 1. Jeju neighborhoods (제주 동/읍/면/리) & English "jeju"
   const jejuKeywords = [
     "제주", "노형", "용담", "아라", "연동", "외도", "화북", "삼양", "이도", "일도", "삼도", "오라", "도두", "봉개", "건입",
-    "애월", "한림", "조천", "구좌", "한경", "대정", "남원", "성산", "안덕", "표선", "jeju"
+    "애월", "한림", "조천", "구좌", "한경", "대정", "남원", "성산", "안덕", "표선", "jeju",
+    "도남", "오등", "회천", "용강", "영평", "월평", "해안", "내도", "이호", "서귀", "동홍", "서홍", "토평", "상효", "하효", "신효", "보목",
+    "법환", "서호", "호근", "강정", "도순", "영남", "대포", "하원", "색달", "상예", "하예", "송산", "정방", "중앙", "천지", "효돈", "영천",
+    "대륜", "대천", "중문", "예래", "우도", "추자"
   ];
   const isJeju = jejuKeywords.some(keyword => lower.includes(keyword.toLowerCase()));
   if (isJeju) {
@@ -387,8 +390,10 @@ export function mapKoreanQueryToEnglish(query: string): { apiQuery: string; disp
   }
 
   // 3. Fallback for sub-districts (e.g., ending with 동, 읍, 면, 리, 구)
+  // If the query ends in a local district but does not have a matched city, keep it as query so WeatherAPI can attempt look up
+  // (Our backend will gracefully fall back to "Jeju, South Korea" or "Seoul" if it fails with 400)
   if (lower.endsWith("동") || lower.endsWith("구") || lower.endsWith("읍") || lower.endsWith("면") || lower.endsWith("리")) {
-    return { apiQuery: "Seoul", displayName: trimmed };
+    return { apiQuery: trimmed, displayName: trimmed };
   }
 
   return { apiQuery: trimmed, displayName: trimmed };
